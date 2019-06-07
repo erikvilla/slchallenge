@@ -27,7 +27,24 @@ const getPersonalInformation = async (page = 1, perPage = 100) => {
     _.pick(person, relevantFields)
   ));
 
-  return people;
+  const nextPage = response.data.metadata.paging.next_page;
+
+  return { people, nextPage };
+};
+
+const getAllPersonalInformation = async () => {
+  let nextPageIndex = 1;
+  let peopleArray = [];
+  do {
+    const response = await getPersonalInformation(nextPage);
+    const { people, nextPage } = response;
+    peopleArray = peopleArray.concat(people);
+    nextPageIndex = nextPage;
+  }
+  while (nextPageIndex);
+  return { people: peopleArray };
 };
 
 export default getPersonalInformation;
+
+export { getPersonalInformation, getAllPersonalInformation };
