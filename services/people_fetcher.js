@@ -36,7 +36,8 @@ const getAllPersonalInformation = async () => {
   let nextPageIndex = 1;
   let peopleArray = [];
   do {
-    const response = await getPersonalInformation(nextPage);
+    // eslint-disable-next-line no-await-in-loop
+    const response = await getPersonalInformation(nextPageIndex);
     const { people, nextPage } = response;
     peopleArray = peopleArray.concat(people);
     nextPageIndex = nextPage;

@@ -1,4 +1,4 @@
-import getPersonalInformation, { getAllPersonalInformation } from '../people_fetcher';
+import { getPersonalInformation, getAllPersonalInformation } from '../people_fetcher';
 
 // jest.mock('axios');
 
