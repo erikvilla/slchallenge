@@ -35,13 +35,13 @@ const PeopleTable = (props) => {
   const [rowsPerPage, setRowsPerPage] = React.useState(50);
 
 
-  function handleChangePage(event, newPage) {
+  const handleChangePage = (event, newPage) => {
     setPage(newPage);
-  }
+  };
 
-  function handleChangeRowsPerPage(event) {
+  const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
-  }
+  };
 
   return (
     <Paper className={classes.root}>
