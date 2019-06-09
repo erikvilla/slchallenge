@@ -10,5 +10,4 @@ describe('email similarity service', () => {
     const similarityMap = getSimilarityMap(emails);
     expect(similarityMap).toBeDefined();
   });
-
 });
