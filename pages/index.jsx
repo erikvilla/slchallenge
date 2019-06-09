@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { getAllPersonalInformation } from '../services/people_fetcher';
+import getCharMap from '../services/char_count';
 import PeopleTable from '../components/people_table';
+import CharMapPanel from '../components/char_map_panel';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -13,10 +15,11 @@ const useStyles = makeStyles(() => ({
 
 const Index = (props) => {
   const classes = useStyles();
-  const { people } = props;
+  const { people, charMap } = props;
 
   return (
     <div className={classes.root}>
+      <CharMapPanel charMap={charMap} />
       <PeopleTable people={people} />
     </div>
   );
@@ -24,7 +27,9 @@ const Index = (props) => {
 
 Index.getInitialProps = async () => {
   const allPersonalInformation = await getAllPersonalInformation();
-  return { people: allPersonalInformation.people };
+  const emails = allPersonalInformation.people.map(element => element.email_address);
+  const charMap = getCharMap(emails);
+  return { people: allPersonalInformation.people, charMap };
 };
 
 Index.propTypes = {
@@ -34,6 +39,7 @@ Index.propTypes = {
     email_address: PropTypes.string,
     title: PropTypes.string,
   })).isRequired,
+  charMap: PropTypes.objectOf(PropTypes.number).isRequired,
 };
 
 export default Index;
