@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
@@ -11,6 +11,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 import getSimilarityMap from '../services/email_similarity';
 
@@ -36,12 +37,20 @@ const similarityMapToArray = (similarityMap) => {
 const SimilarityMapPannel = (props) => {
   const { emails } = props;
   const [similarityMapArray, setSimilarityMapArray] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [generateSimilarityMapArray, setGenerateSimilarityMapArray] = useState(false);
 
-  const handlePanelChange = (event, expanded) => {
-    if (expanded) {
+  useEffect(() => {
+    if (generateSimilarityMapArray) {
       const similarityMap = getSimilarityMap(emails);
       setSimilarityMapArray(similarityMapToArray(similarityMap));
+      setLoading(false);
     }
+    if (loading) { setGenerateSimilarityMapArray(true); }
+  }, [loading, generateSimilarityMapArray]);
+
+  const handlePanelChange = (event, expanded) => {
+    if (expanded) { setLoading(true); }
   };
 
   const classes = useStyles();
@@ -77,6 +86,7 @@ const SimilarityMapPannel = (props) => {
           </Table>
         </ExpansionPanelDetails>
       </ExpansionPanel>
+      {loading ? <LinearProgress /> : null}
     </div>
   );
 };
