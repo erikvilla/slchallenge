@@ -7,10 +7,12 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+
+import objectToArray from './lib/object_to_array';
+import TableBodyFromArray from './lib/table_body_from_array';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -23,12 +25,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const charMapToSortedArray = (charMap) => {
-  const charMapKeys = Object.keys(charMap);
-  const charMapArray = [];
-  for (let i = 0; i < charMapKeys.length; i += 1) {
-    charMapArray.push([charMapKeys[i], charMap[charMapKeys[i]]]);
-  }
-
+  const charMapArray = objectToArray(charMap);
   charMapArray.sort((a, b) => b[1] - a[1]);
   return charMapArray;
 };
@@ -57,16 +54,7 @@ const CharMapPannel = (props) => {
                 <TableCell align="right">Count</TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
-              {charMapArray.map(countSet => (
-                <TableRow key={countSet[0]}>
-                  <TableCell component="th" scope="row">
-                    {countSet[0]}
-                  </TableCell>
-                  <TableCell align="right">{countSet[1]}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
+            <TableBodyFromArray sourceArray={charMapArray} />
           </Table>
         </ExpansionPanelDetails>
       </ExpansionPanel>

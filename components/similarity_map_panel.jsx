@@ -7,13 +7,14 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 import getSimilarityMap from '../services/email_similarity';
+import objectToArray from './lib/object_to_array';
+import TableBodyFromArray from './lib/table_body_from_array';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -25,15 +26,6 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const similarityMapToArray = (similarityMap) => {
-  const mapKeys = Object.keys(similarityMap);
-  const mapArray = [];
-  for (let i = 0; i < mapKeys.length; i += 1) {
-    mapArray.push([mapKeys[i], similarityMap[mapKeys[i]]]);
-  }
-  return mapArray;
-};
-
 const SimilarityMapPannel = (props) => {
   const { emails } = props;
   const [similarityMapArray, setSimilarityMapArray] = useState([]);
@@ -43,7 +35,7 @@ const SimilarityMapPannel = (props) => {
   useEffect(() => {
     if (generateSimilarityMapArray) {
       const similarityMap = getSimilarityMap(emails);
-      setSimilarityMapArray(similarityMapToArray(similarityMap));
+      setSimilarityMapArray(objectToArray(similarityMap));
       setLoading(false);
     }
     if (loading) { setGenerateSimilarityMapArray(true); }
@@ -73,16 +65,7 @@ const SimilarityMapPannel = (props) => {
                 <TableCell align="right">Possible duplicates</TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
-              {similarityMapArray.map((similaritySet => (
-                <TableRow key={similaritySet[0]}>
-                  <TableCell component="th" scope="row">
-                    {similaritySet[0]}
-                  </TableCell>
-                  <TableCell align="right">{similaritySet[1]}</TableCell>
-                </TableRow>
-              )))}
-            </TableBody>
+            <TableBodyFromArray sourceArray={similarityMapArray} />
           </Table>
         </ExpansionPanelDetails>
       </ExpansionPanel>
