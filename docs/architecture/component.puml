@@ -1,0 +1,40 @@
+@startuml
+
+title Packages - Component Diagram
+
+node "Nextjs app" as nextjs_app {
+  package "Pages"{
+    component "index" as index
+  }
+  package "Components" as components{
+    component "char_map_panel" as char_map_panel
+    component "similarity_map_panel" as similarity_map_panel
+    component "people_table" as people_table
+    package "lib" as lib {
+      component "object_to_array" as object_to_array
+      component "table_body_from_array" as table_body_from_array
+    }
+  }
+  package "Services" as services{
+    component "char_count" as char_count
+    component "email_similarity" as email_similarity
+    component "people_fetcher" as people_fetcher
+  }
+}
+
+node "Salesloft API" as salesloft_api
+
+
+cloud Internet {
+}
+ 
+people_fetcher --> Internet: SL API token
+Internet -> salesloft_api
+index -down-> services
+index -down-> components
+table_body_from_array -down-> char_map_panel
+table_body_from_array -down-> similarity_map_panel
+object_to_array -> char_map_panel
+object_to_array -> similarity_map_panel
+
+@enduml

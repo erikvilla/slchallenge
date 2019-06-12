@@ -1,0 +1,11 @@
+@startuml
+
+title Use Case Diagram
+
+actor :Salesloft admin: as sl_admin
+
+sl_admin -left-> (View char frequency)
+sl_admin -down-> (View possible duplicates)
+sl_admin -> (View people information)
+
+@enduml
