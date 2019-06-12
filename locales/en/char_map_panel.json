@@ -1,0 +1,7 @@
+{
+  "panel_summary": "Show email char count",
+  "head": {
+    "letter": "Letter",
+    "count": "Count"
+  }
+}

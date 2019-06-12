@@ -13,6 +13,7 @@ import TableRow from '@material-ui/core/TableRow';
 
 import objectToArray from './lib/object_to_array';
 import TableBodyFromArray from './lib/table_body_from_array';
+import locales from '../locales/en/char_map_panel.json';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -44,14 +45,14 @@ const CharMapPannel = (props) => {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography className={classes.heading}>Show email char count</Typography>
+          <Typography className={classes.heading}>{locales.panel_summary}</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
           <Table className={classes.table}>
             <TableHead>
               <TableRow>
-                <TableCell>Letter</TableCell>
-                <TableCell align="right">Count</TableCell>
+                <TableCell>{locales.head.letter}</TableCell>
+                <TableCell align="right">{locales.head.count}</TableCell>
               </TableRow>
             </TableHead>
             <TableBodyFromArray sourceArray={charMapArray} />

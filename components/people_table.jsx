@@ -9,6 +9,8 @@ import TableRow from '@material-ui/core/TableRow';
 import TablePagination from '@material-ui/core/TablePagination';
 import Paper from '@material-ui/core/Paper';
 
+import locales from '../locales/en/people_table.json';
+
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
@@ -48,12 +50,12 @@ const PeopleTable = (props) => {
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
-            <TableCell className={classes.header}>Name</TableCell>
+            <TableCell className={classes.header}>{locales.head.name}</TableCell>
             <TableCell align="right" className={classes.header}>
-              Title
+              {locales.head.title}
             </TableCell>
             <TableCell align="right" className={classes.header}>
-              Email
+              {locales.head.email}
             </TableCell>
           </TableRow>
         </TableHead>

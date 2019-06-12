@@ -15,6 +15,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import getSimilarityMap from '../services/email_similarity';
 import objectToArray from './lib/object_to_array';
 import TableBodyFromArray from './lib/table_body_from_array';
+import locales from '../locales/en/similarity_map_panel.json';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -55,14 +56,14 @@ const SimilarityMapPannel = (props) => {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography className={classes.heading}>Show possible duplicates</Typography>
+          <Typography className={classes.heading}>{locales.panel_summary}</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
           <Table className={classes.table}>
             <TableHead>
               <TableRow>
-                <TableCell>User</TableCell>
-                <TableCell align="right">Possible duplicates</TableCell>
+                <TableCell>{locales.head.user}</TableCell>
+                <TableCell align="right">{locales.head.duplicates}</TableCell>
               </TableRow>
             </TableHead>
             <TableBodyFromArray sourceArray={similarityMapArray} />
